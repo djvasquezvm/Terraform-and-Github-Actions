@@ -1,29 +1,21 @@
-name: terraform apply
+name: terraform deploy
 on:
   push:
     branches:
       - master
-defaults:
-  run:
-    shell: bash
 jobs:
-  terraform-apply:
+  terraform:
     runs-on: ubuntu-latest
     steps:
-    - name: Setup AWS Credentials
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        mkdir -p .aws
-        echo [default] > .aws/credentials
-        echo aws_access_key_id = $AWS_ACCESS_KEY_ID >> .aws/credentials
-        echo aws_secret_access_key = $AWS_SECRET_ACCESS_KEY >> .aws/credentials
-    - uses: actions/checkout@v2
-    - uses: hashicorp/setup-terraform@v1
-    - name: Terraform version
-      run: terraform version
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Terraform Setup
+      uses: hashicorp/setup-terraform@v1
+
     - name: Terraform Init
       run: terraform init
-    - name: Terraform Plan
-      run: terraform plan 
+      env:
+        TF_ACTION_WORKING_DIR: '.'
+        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
