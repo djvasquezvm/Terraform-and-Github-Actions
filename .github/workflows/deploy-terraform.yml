@@ -23,7 +23,8 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
     - name: Terraform version
       run: terraform version
-    - name: Terraform init
+    - name: Setup terraform
       uses: ./
+    - name: Terraform Init
       run: terraform init
 
