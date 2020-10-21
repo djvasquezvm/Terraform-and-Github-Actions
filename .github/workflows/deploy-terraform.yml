@@ -19,10 +19,5 @@ jobs:
         echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .aws/credentials
         cat .aws/credentials
     - uses: hashicorp/setup-terraform@v1
-    - name: Terraform fmt
-      id: fmt
-      run: terraform fmt -check
-      continue-on-error: true
-    - name: Terraform Init
-      id: init
-      run: terraform init
+    - name: Terraform version
+      run: terraform version
