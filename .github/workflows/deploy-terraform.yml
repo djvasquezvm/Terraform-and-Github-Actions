@@ -24,8 +24,6 @@ jobs:
         echo aws_secret_access_key = $AWS_SECRET_ACCESS_KEY >> .aws/credentials
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Setup terraform
-      uses: ./
     - name: Terraform Init
       run: terraform init
 
