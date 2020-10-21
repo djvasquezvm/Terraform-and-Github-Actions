@@ -10,6 +10,9 @@ jobs:
   terraform-apply:
     runs-on: ubuntu-latest
     steps:
+    - uses: hashicorp/setup-terraform@v1
+    - name: Terraform version
+      run: terraform version
     - uses: actions/checkout@v2
     - name: Setup AWS Credentials
       env:
@@ -20,9 +23,6 @@ jobs:
         echo [default] > .aws/credentials
         echo aws_access_key_id = $AWS_ACCESS_KEY_ID >> .aws/credentials
         echo aws_secret_access_key = $AWS_SECRET_ACCESS_KEY >> .aws/credentials
-    - uses: hashicorp/setup-terraform@v1
-    - name: Terraform version
-      run: terraform version
     - name: Setup terraform
       uses: ./
     - name: Terraform Init
